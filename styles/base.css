@@ -1,0 +1,168 @@
+*{
+    margin:0;
+    padding:0;    
+}
+
+html {
+    /* width:100%;
+     height:100%;*/
+}
+
+body {
+    font: normal 12px sans-serif, Arial, Tahoma, Verdana;
+    /*top:0;
+    width:100%;
+    height:100%;*/
+    background: #f0f0f0;
+    background: url('../images/bg.png');
+}
+#main {
+    width:100%;
+    height:100%;
+    position:absolute;
+}
+.container {
+    margin: 0 auto;
+    width: 700px;
+}
+
+.group:after {
+    content: "";
+    display: table;
+    clear: both;
+}
+
+.left {
+    float: left;
+}
+
+.right {
+    float: right;
+}
+header {
+
+}
+#logo {
+    height:40px;
+    padding:10px 0;
+    margin:20px 0;
+    position:absolute;
+    width:100%;
+    left:0;
+    top:0;
+    background-color:#ffffff;
+    box-shadow:0 5px 5px #bbb;
+}
+
+#logo img {
+    margin-left:320px;   
+}
+
+.required span {
+    vertical-align: top;
+    color:#ff0000;
+    margin-left:5px;
+}
+.mask {
+    z-index:2;
+    position:absolute;
+    width:100%;
+    height:100%;
+    background-color:#000000;
+    opacity:0.5;
+}
+.pop {
+    z-index:10;
+    position:absolute;
+    left:30%;
+    top:25%;
+    border:1px solid #bbbbbb;
+    min-width:450px;
+    min-height:100px;
+    background-color:#ffffff;
+}
+.pop header, .pop footer button{
+    color:#5E5E5E;
+    font-weight: bold;
+}
+.pop header{
+   
+    padding:10px 6px;
+   
+}
+
+.pop header {
+    cursor: move;
+     min-height:30px;
+    background:url('../images/window/center.png') repeat-x;
+}
+
+.pop .popContent {
+    padding: 10px;
+}
+
+.pop footer {
+    min-height:40px;
+    position:relative;
+    vertical-align: middle;
+    width:100%;
+    bottom:0;
+    background:url('../images/window/top-bottom.png') repeat-x;
+    /*background-color:#EFEFEF;*/
+}
+.pop footer .buttons {
+  position:absolute;
+  right:0;
+  top:7px;
+  
+   
+}
+
+.pop button {
+    border-radius: 3px;
+    box-shadow:0px 2px 5px #bbbbbb;
+     margin-right:10px;
+    min-width: 80px;
+    height:25px;
+    border:1px solid #D6D6D6;
+    
+    background-color:#F4F4F4;
+}
+.pop button:hover {
+    cursor:pointer;
+     background-color:#ffffff;
+}
+.pop .close {
+    cursor: pointer;
+    position:absolute;
+    top:10px;
+    right:5px;
+        background-position: -114px -3px;
+    width: 16px;
+    height: 16px;
+    background-image: url('../images/dashboard_icons.png');
+}
+
+.pop .row
+{
+    margin:20px 0;
+    display:table;
+}
+.pop .row label {
+    vertical-align:top;
+    margin-right:10px;
+    width:100px;
+    display:table-cell;
+}
+.pop .row input,  .pop .row textarea{
+    width:220px;
+    display:table-cell;
+}
+.pop .row input[type='date'] {
+    width:130px;
+    margin-right:15px;
+}
+
+.pop .row input[type='time'] {
+    width:66px;
+}

@@ -1,0 +1,125 @@
+html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, font, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    outline: 0;
+    font-weight: inherit;
+    font-style: inherit;
+    font-size: 100%;
+    font-family: inherit;
+    vertical-align: baseline;
+}
+.topHeader
+{
+	padding-left: 7px;
+	padding-top: 6px;
+	background: url(../images/confirmation/top.png) repeat-x;
+	height:40px;
+	margin-bottom:72px;
+}
+.middlePanel
+{
+	min-height:487px;
+	margin-left: 75px;
+	position: relative;
+	width: 869px;
+}
+.logoPanel
+{
+	background: url(../images/confirmation/logo.png) no-repeat;
+	width:205px;
+	height:36px;
+}
+
+#mainContent{
+	font-family: Arial, Helvetica, sans-serif;
+	padding-top:27px;
+	color:black;
+	height:283px;
+	border-top:1px solid #bababa;
+	border-bottom:1px solid #bababa;;
+}
+.contentText{
+	width: 507px;
+	margin-left:61px;
+}
+.confirmation_text
+{
+	padding: 8px 0;
+	float:left;
+	width:100%;
+	color:#336600;
+	font-size:13px;
+	margin-bottom: 11px;
+	border:1px solid #c5f191;
+	border-radius:4px;
+	-webkit-border-radius:4px;
+	-moz-border-radius:4px;
+	background:#ddfaba;
+}
+.confirmation_text_nok
+{
+	padding: 8px 0;
+	float:left;
+	width:100%;
+	color:#ff0101;
+	font-size:13px;
+	margin-bottom: 11px;
+	border: 1px solid #ffb0b0;
+	border-radius:4px;
+	-webkit-border-radius:4px;
+	-moz-border-radius:4px;
+	background: #ffc7c7;
+}
+.confirmation_check_img
+{
+	margin-left:10px;
+	float:left;
+	width:30px;
+	height:17px;
+	background: url(../images/confirmation/check.png) no-repeat;
+
+}
+.confirmation_checkX_img
+{
+	margin-left:10px;
+	float:left;
+	width:30px;
+	height:17px;
+	background: url(../images/confirmation/cancel.png) no-repeat;
+
+}
+.confirmation_subTitle
+{
+	margin-bottom: 27px;
+	font-weight:bold;
+	font-size:24px;
+}
+#mainContent .text
+{
+	font-size:17px;
+	font-weight: normal;
+	line-height: 20px;
+}
+.mainPanel .loginButton{
+	text-decoration:none;
+	font-size:13px;
+	color:#666666;
+	float:right;
+	padding: 6px 37px 4px;
+	background: url(../images/confirmation/mainButton.png) no-repeat;
+	border: 0;
+
+}
+.mainPanel .okButton{
+	text-decoration:none;
+	font-size:13px;
+	color:#666666;
+	float:right;
+	width:92px;
+	background: url(../images/confirmation/mainButton.png) no-repeat;
+	border: 0;
+	height: 23px;
+	text-align: center;
+	padding-top: 6px;
+}
