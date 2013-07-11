@@ -1,9 +1,3 @@
-/* 
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
-
 function popWindowClass() {
     var that = this;
     var _id;
@@ -15,12 +9,10 @@ function popWindowClass() {
     var _buttonAction;
     var _footer;
     var _type;
-    var that = this;
+    
     this.generate = function(title, type, id) {
         _id = typeof id !== 'undefined' ? id : new Date().getTime();
-//        alert(id);
         _type = type;
-//        alert(title);
         win = document.createElement('div');
         win.className = 'pop';
         win.id = _id;
@@ -39,18 +31,7 @@ function popWindowClass() {
         _content = document.createElement('div');
         _content.className = 'popContent';
         win.appendChild(_content);
-//        header.appendChild("<div></div>");
-        /* win.innerHTML = '<header>\n\
-         <p>' + title + '</p>\n\
-         <div class="close"  ></div>\n\
-         </header>\n\
-         <div class="popContent" id="popContent">\n\
-         </div>\n\
-         ';*/
-//        if (_type == 'message') {
-////            win.getElementsByClassName ('popContent');
-//        }
-////        alert(_type);
+        
         _footer = document.createElement('footer');
         var _buttons = document.createElement('div');
         _buttons.className = 'buttons';
@@ -91,6 +72,7 @@ function popWindowClass() {
                 _buttonCancel.innerHTML = 'Cancel';
                 break;
         }
+        
         mask = document.createElement('div');
         mask.className = 'mask';
         document.getElementsByTagName('body')[0].appendChild(win);
@@ -108,10 +90,7 @@ function popWindowClass() {
         }
         if (_type == 'edit')
         {
-            var formId = jQuery("#" + _id).children('form')[0];//.attr('id');
-            console.log("formId" + formId);
-//            console.log("content" + _content);
-//            _content.innerHTML = text;
+            var formId = jQuery("#" + _id).children('form')[0];
             var data = _id.split("-");
             jQuery.ajax({
                 url: 'ajax.php',
@@ -122,15 +101,10 @@ function popWindowClass() {
                     action: 'getEditableFields'
                 }
             }).success(function(result) {
-//alert(result);
-//        var j = '[{"element":"input","name":"date","value":"2012-12-12"},{"element":"input","name":"time","value":"12:12"},{"element":"textarea","name":"eventDesc","value":"Description"}]';
-
                 var arr = jQuery.parseJSON(result);
-//    console.log(arr);
+                
                 var str = "";
                 arr.forEach(function(field) {
-
-
                     if (field.element == 'input') {
                         jQuery('#' + _id + ' input[name=' + field.name + ']').val(field.value);
                     }
@@ -138,53 +112,22 @@ function popWindowClass() {
                         jQuery('#' + _id + ' textarea[name=' + field.name + ']').val(field.value);
                     }
                 });
-//                alert(formId);
-//                var element = jQuery.parseHTML(str);
-//                console.log(element);
-////    document.getElementById("#"+formId).appendChild(element);
-////     += str;
-//                jQuery('#' + formId).append(element);
-//                console.log(str);
-//                return;
-
-                // }
-                /* else
-                 {
-                 res = false;
-                 
-                 jQuery("#" + formId + "#notes").children('p.' + fieldName + 'FErr').html('');
-                 elem.removeClass('until-validate validation-failed').addClass('validation-passed');
-                 showErrorMsg(formId);
-                 
-                 }*/
             });
 
         }
+        
         if (_type != 'message') {
             _buttonAction.onmouseup = function(event) {
                 var form = _content.getElementsByTagName('form')[0];
-                console.log(form.id);
-//            var formId='';
                 if (isValidForm(form.id))
                     form.submit();
-
             }
         }
     }
 
-    this.actionParam = function(obj, id) {
-//        alert(obj+'action'+id);
-
-    }
-
     this.close = function() {
-//        alert('close');
-
         var p = win.parentNode;
-        console.log(p);
         p.removeChild(win);
         p.removeChild(mask);
-//        document.getElementsByTagName('body')[0].removeChild(win);
-
     }
 }

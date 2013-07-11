@@ -24,7 +24,7 @@ class MySQL {
     var $_isConnect = false;
 
     private function MySQL() {
-        require_once('/'.ROOTFOLDER.'/conf/db-config.php');
+        require_once(ROOTFOLDER.'/conf/db-config.php');
 //        exit(DB_HOST);
         $this->_server = DB_HOST;
         $this->_dbName = DB_NAME;

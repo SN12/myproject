@@ -1,8 +1,10 @@
 <?php 
+define('ROOT', dirname(dirname(__FILE__)));
+
 require_once 'conf/vars.php';
 session_start();
 if(isset($_SESSION['user']))
-     header('Location:/'+ROOTFOLDER+'/dashboardUser.php');
+     header('Location:'.DOMAIN.'dashboardUser.php');
 ?>
 <!DOCTYPE html>
  <html>

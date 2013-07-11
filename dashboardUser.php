@@ -1,9 +1,15 @@
 <?php
-require_once 'conf/vars.php';
 session_start();
+require_once 'conf/vars.php';
 
-if(!isset($_SESSION['user']))
-     header('Location:/'+ROOTFOLDER+'/login.php');
+if (isset($_GET['logout'])) {
+
+    session_destroy();
+    header('Location:' . DOMAIN . 'login.php');
+}
+
+if (!isset($_SESSION['user']))
+    header('Location:' . DOMAIN . 'login.php');
 
 if (!isset($_GET['tab']))
     $tab = 'contacts';
@@ -28,6 +34,13 @@ else
 
     </head>
     <body>
+        <?php if (isset($_GET['reg']) && $_GET['reg'] == 1): ?>
+            <script>
+                var win = new popWindowClass();
+                win.generate('WELCOME', 'message');
+                win.content('Thank you for registration!!!');
+            </script>
+        <?php endif; /* end if for pop up window */ ?>
         <div id="main" >
             <header id="header">
                 <div class="miniLogo" >
@@ -39,7 +52,7 @@ else
                     <h1>User dashbaord</h1>
                 </div>
                 <div class="userInfo">
-                    <a  >sn.nazinyan@gmail.com</a>
+                    <a  href="?logout" class="logout">Log out</a>
                 </div>
             </header>
             <div id="content" >
@@ -52,6 +65,23 @@ else
                     <div class="mcontent">
                         <?php
                         if ($tab == 'contacts'):
+
+                            if (isset($_GET['add'])) {
+
+                                $str = " <script>
+                                    var win = new popWindowClass();";
+                                if ($_GET['add'] == 1) {
+
+                                    $str.="win.generate('Success', 'message');
+                               win.content('New contact has successfully added.');";
+                                } else {
+                                    $str.="win.generate('Error', 'message');
+                              win.content('<p>The contact has not added.');";
+                                }
+
+                                $str.="</script>";
+                                echo $str;
+                            }
                             ?>
                             <div class="contacts">
                                 <header></header>

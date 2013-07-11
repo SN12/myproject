@@ -1,8 +1,7 @@
 <?php
 
 require_once 'conf/vars.php';
-//exit(ROOTFOLDER);
-if ($_POST) {
+if (isset($_POST)) {
 
     /* Registration and login */
 
@@ -14,7 +13,7 @@ if ($_POST) {
         } else {
             if (filter_var($_POST['email'], FILTER_VALIDATE_EMAIL) && filter_var($_POST['firstName'], FILTER_VALIDATE_REGEXP, array("options" => array("regexp" => "/[^A-Za-z0-9@\.]/"))) == '' && filter_var($_POST['lastName'], FILTER_VALIDATE_REGEXP, array("options" => array("regexp" => "/[^A-Za-z0-9@\.]/"))) == '' && filter_var($_POST['password'], FILTER_VALIDATE_REGEXP, array("options" => array("regexp" => "/[^A-Za-z0-9@\.]/"))) == '' && filter_var($_POST['conf_password'], FILTER_VALIDATE_REGEXP, array("options" => array("regexp" => "/[^A-Za-z0-9@\.]/"))) == ''
             ) {
-                require_once('/' . ROOTFOLDER . '/inc/userClass.php');
+                require_once(ROOTFOLDER . '/inc/userClass.php');
                 $pass1 = $_POST['password'];
                 $pass2 = $_POST['conf_password'];
 
@@ -37,10 +36,7 @@ if ($_POST) {
             }
         }
         if ($st == true) {
-
-//                exit('actiobn');
             header('Location:' . DOMAIN . 'dashboardUser.php?reg=' . $st);
-//              header('Location:http://'.ROOTFOLDER.'/dashboardUser.php?');
         }
         else
             header('Location:' . DOMAIN . '/login.php?reg=' . $st);
@@ -52,7 +48,7 @@ if ($_POST) {
             $st = false;
         } else {
             if (filter_var($_POST['loginEmail'], FILTER_VALIDATE_EMAIL) && filter_var($_POST['loginPassword'], FILTER_VALIDATE_REGEXP, array("options" => array("regexp" => "/[^A-Za-z0-9@\.]/"))) == '') {
-                require_once ('/' . ROOTFOLDER . '/inc/userClass.php');
+                require_once (ROOTFOLDER . '/inc/userClass.php');
                 $login = $_POST['loginEmail'];
                 $password = md5($_POST['loginPassword']);
                 $User = new userClass();
@@ -82,7 +78,7 @@ if ($_POST) {
         } else {
             if (filter_var($_POST['login'], FILTER_VALIDATE_REGEXP, array("options" => array("regexp" => "/[^A-Za-z0-9@\.]/"))) == '' || filter_var($_POST['password'], FILTER_VALIDATE_REGEXP, array("options" => array("regexp" => "/[^A-Za-z0-9@\.]/"))) == '') {
 
-                require_once ('/' . ROOTFOLDER . '/inc/userClass.php');
+                require_once (ROOTFOLDER . '/inc/userClass.php');
                 $login = $_POST['login'];
                 $password = md5($_POST['password']);
                 $User = new userClass();
@@ -112,25 +108,25 @@ if ($_POST) {
             $response = false;
         } else {
             if (filter_var($_POST['email'], FILTER_VALIDATE_EMAIL) && filter_var($_POST['firstName'], FILTER_VALIDATE_REGEXP, array("options" => array("regexp" => "/[^A-Za-z0-9@\.]/"))) == '' && filter_var($_POST['lastName'], FILTER_VALIDATE_REGEXP, array("options" => array("regexp" => "/[^A-Za-z0-9@\.]/"))) == '') {
-                require_once('/' . ROOTFOLDER . '/inc/contactClass.php');
+                require_once(ROOTFOLDER . '/inc/contactClass.php');
                 $contactInfo = array();
                 $contactInfo['firstName'] = $_POST['firstName'];
                 $contactInfo['lastName'] = $_POST['lastName'];
                 $contactInfo['email'] = $_POST['email'];
-                $contactInfo['hash'] = md5(uniqid(rand(), true));
+                $hash = md5(uniqid(rand(), true));
 
                 $Contact = new contactClass($contactInfo);
                 $response = false;
                 if ($Contact->add_person_to_db()) {
-
-                    require_once('/' . ROOTFOLDER . '/inc/functions.php');
-                    if (verification_mail($contactInfo['email'], $contactInfo['hash'], $contactInfo['firstName'])) {
+                     $hash .=$Contact->_personId;  
+                    require_once(ROOTFOLDER . '/inc/functions.php');
+                    if (verification_mail($contactInfo['email'], $hash, $contactInfo['firstName'])) {
                         $response = true;
                     }
                 }
             }
         }
-        header('Location:' . DOMAIN . 'dashboardUser.php?addContact=' . $response);
+        header('Location:' . DOMAIN . 'dashboardUser.php?tab=contacts&add=' . $response);
     }
     /* Events */
 
@@ -148,7 +144,7 @@ if ($_POST) {
                     $eventInfo['datetime'] = $date;
                     $eventInfo['event_desc'] = $_POST['eventDesc'];
 
-                    require_once('/' . ROOTFOLDER . '/inc/eventClass.php');
+                    require_once(ROOTFOLDER . '/inc/eventClass.php');
                     $Event = new eventClass($eventInfo);
                     $response = false;
                     if ($Event->add_event_to_db())
@@ -156,7 +152,7 @@ if ($_POST) {
                 }
             }
         }
-        header('Location:' . DOMAIN . 'dashboardAdmin.php?tab=events&add=' . $response);
+        header('Location:' . DOMAIN . 'dashboardAdmin.php?tab=events&action=add&value=' . $response);
     }
 
     if ($_POST['action'] == "updateEvent") {
@@ -173,7 +169,7 @@ if ($_POST) {
                     $eventInfo['event_desc'] = $_POST['eventDesc'];
                     $eventInfo['event_desc'] = $_POST['eventDesc'];
                     $eventId = $_POST['eventId'];
-                    require_once('/' . ROOTFOLDER . '/inc/eventClass.php');
+                    require_once(ROOTFOLDER . '/inc/eventClass.php');
                     $Event = new eventClass();
                     $Event->get_event_from_db_by_uniq_field('id', $eventId);
                     if ($Event->update_event($eventInfo))
@@ -181,7 +177,7 @@ if ($_POST) {
                 }
             }
         }
-        header('Location:' . DOMAIN . 'dashboardAdmin.php?tab=events&update=' . $response);
+        header('Location:' . DOMAIN . 'dashboardAdmin.php?tab=events&action=update&value=' . $response);
     }
 
     if ($_POST['action'] == "deleteEvent") {
@@ -190,17 +186,17 @@ if ($_POST) {
         if (!isset($_POST['eventId']) || empty($_POST['eventId']) || filter_var($_POST['eventId'], FILTER_VALIDATE_INT) == '') {
             $response = false;
         } else {
-            require_once('/' . ROOTFOLDER . '/inc/eventClass.php');
+            require_once(ROOTFOLDER . '/inc/eventClass.php');
             $Event = new eventClass();
             $id = $_POST['eventId'];
             $response = false;
             if ($Event->delete_event($id))
                 $response = true;
         }
-        header('Location:' . DOMAIN . 'dashboardAdmin.php?tab=events&delete=' . $response);
+        header('Location:' . DOMAIN . 'dashboardAdmin.php?tab=events&action=delete&value=' . $response);
     }
 
-    /* Send an email */
+    /* Send email */
 
     if ($_POST['action'] == "sendMail") {
         $response = false;
@@ -226,11 +222,11 @@ if ($_POST) {
                     $type = $_POST['fileType'];
                     $cond = " WHERE datetime>'{$from}' AND datetime<'{$to}'";
 
-                    require_once('/' . ROOTFOLDER . '/inc/eventClass.php');
+                    require_once(ROOTFOLDER . '/inc/eventClass.php');
                     $Event = new eventClass();
                     $res = $Event->get_events($cond);
                     if ($res) {
-                        require_once('/' . ROOTFOLDER . '/inc/functions.php');
+                        require_once( ROOTFOLDER . '/inc/functions.php');
                         $fields = array('Date/Time', 'Description');
                         $file_fields = array();
                         $file_fields = array();
@@ -238,8 +234,9 @@ if ($_POST) {
                         $file_fields[] = 'Description';
                         
                         $f = 'create_' . $type;
+                        
                         if ($data = $f($res,$file_fields, $subject )) {
-                            require_once('/' . ROOTFOLDER . '/inc/contactClass.php');
+                            require_once(ROOTFOLDER . '/inc/contactClass.php');
                             $Contact =new contactClass();
                             $contacts = $Contact->get_persons("status=2");
                             $mails ='';
@@ -247,16 +244,18 @@ if ($_POST) {
                                 $mails.=$contact['email'].",";
                             }
                             $mails = substr_replace($mails, "", -1);
-                            var_dump($mails);
+//                            var_dump($mails);
                             sendMailWithAttachment($mails, $data, $subject, $text);
-                            exit;
-                            $response = true;
+//                            exit;
+                            $response = true.'&type='.$type;
                         }
                     }
                 }
             }
         }
-        header('Location:' . DOMAIN . 'dashboardAdmin.php?tab=sendMail&send=' . $response);
+        header('Location:' . DOMAIN . 'dashboardAdmin.php?tab=sendMail&action=send&value=' . $response);
     }
 }
+
+
 ?>

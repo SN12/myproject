@@ -1,8 +1,14 @@
 <?php
-require_once 'conf/vars.php';
 session_start();
-if(!isset($_SESSION['admin']))
-    header('Location:/'.DOMAIN.'adminLogin.php');
+require_once 'conf/vars.php';
+if (isset($_GET['logout'])) {
+    session_destroy();
+
+    header('Location:' . DOMAIN . 'login.php');
+}
+
+if (!isset($_SESSION['admin']))
+    header('Location:' . DOMAIN . 'adminLogin.php');
 if (!isset($_GET['tab']))
     $tab = 'contacts';
 else
@@ -35,7 +41,7 @@ else
                     <h1>Admin dashbaord</h1>
                 </div>
                 <div class="userInfo">
-                    <a  href="logout">log out</a>
+                    <a  href="?logout" class="logout">log out</a>
 
                 </div>
             </header>
@@ -60,35 +66,39 @@ else
                             <div class="contacts">
                                 <header></header>
                                 <section>
-                                    <table class="grid">
-                                        <thead>
-                                            <tr>
-                                                <td>ID</td>
-                                                <td>First Name</td>
-                                                <td>Last Name</td>
-                                                <td>Email</td>
-                                                <td>Status</td>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <?php
-                                            $str = "";
-                                            foreach ($contacts as $contact) {
-                                                $status = array('1'=>"pending", '2'=>"active", '3'=>"inactive");
-                                                $str .= "<tr>
+                                    <?php if ($contacts): ?>
+                                        <table class="grid">
+                                            <thead>
+                                                <tr>
+                                                    <td>ID</td>
+                                                    <td>First Name</td>
+                                                    <td>Last Name</td>
+                                                    <td>Email</td>
+                                                    <td>Status</td>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <?php
+                                                $str = "";
+                                                foreach ($contacts as $contact) {
+                                                    $status = array('1' => "pending", '2' => "active", '3' => "inactive");
+                                                    $str .= "<tr>
                                                             <td>{$contact['id']}</td>
                                                             <td>{$contact['FirstName']}</td>
                                                             <td>{$contact['LastName']}</td>
                                                             <td>{$contact['email']}</td>
                                                             <td>{$status[$contact['status']]}</td>
                                                         </tr>";
-                                            }
-                                            echo $str;
-                                            ?>
-
-
-                                        </tbody>
-                                    </table>
+                                                }
+                                                echo $str;
+                                                ?>
+                                            </tbody>
+                                        </table>
+                                        <?php
+                                    else:
+                                        echo "<p>There are no contacts.</p>";
+                                    endif; /* Contacts list */
+                                    ?>
                                 </section>
                                 <div>
                                 </div>
@@ -97,6 +107,20 @@ else
                         <?php endif; /* tab contacts end */ ?>
                         <?php
                         if ($tab == 'events'):
+                            if (isset($_GET['action'])) {
+                                $end = ($_GET['action'] == 'add') ? 'ed' : 'd';
+                                $str = " <script>
+                                    var win = new popWindowClass();";
+                                if ($_GET['value'] == 1)
+                                    $str.="win.generate('Success', 'message');
+                               win.content('The event has successfully {$_GET['action']}{$end}.');";
+                                else
+                                    $str.="win.generate('Error', 'message');
+                               win.content('The event has not {$_GET['action']}ed.');";
+
+                                $str .="</script>";
+                                echo $str;
+                            }
                             require_once('inc/eventClass.php');
                             $Event = new eventClass();
                             $events = $Event->get_events();
@@ -144,16 +168,33 @@ else
                                             </table>
                                             <?php
                                         else:
-                                            echo "<p>There is no events. </p>";
+                                            echo "<p>There are no events. </p>";
                                         endif; /* end events list */
                                         ?>
                                     </section>
-                                    <div>
-                                    </div>
                                 </div>
                             </div>
                         <?php endif; /* end events tab */ ?>
-                        <?php if ($tab == 'sendMail'): ?>  
+                        <?php
+                        if ($tab == 'sendMail'):
+                            if (isset($_GET['action'])) {
+
+                                $str = " <script>
+                                    var win = new popWindowClass();";
+                                if ($_GET['value'] == 1 && isset($_GET['type'])) {
+                                    $type = $_GET['type'];
+                                    $str.="win.generate('Success', 'message');
+                              win.content('<p>The mail has successfully send.</p><p>Click <a target=\"_blank\" style=\"font-style:italic;\" href=\"" . DOMAIN . "files/{$type}/attachment.{$type}\">here</a> for view the attachment file</p>');";
+                                } else {
+                                    $str.="win.generate('Error', 'message');
+                              win.content('<p>The mail has not send.</p>');";
+                                }
+
+                                $str.="</script>";
+
+                                echo $str;
+                            }
+                            ?>  
                             <div class="sendMail tabContent">
                                 <header>
                                     <h2>Send mail to active contacts</h2>
@@ -188,7 +229,7 @@ else
                                                 <div class='column radiobuttons'>	
                                                     <label for="text">Select file type</label>
                                                     <input type="radio" name="fileType" value="pdf" checked/><span>PDF</span>
-                                                    <input type="radio" name="fileType"  value="cvs"/><span>CVS</span>
+                                                    <input type="radio" name="fileType"  value="csv"/><span>CSV</span>
                                                 </div>
 
                                                 <div class='column'>	
@@ -207,7 +248,7 @@ else
                             <div>
                             </div>
                         </div>
-                    <?php endif; /* end send mail tab */ ?>
+<?php endif; /* end send mail tab */ ?>
                 </div>
             </div>
     </body>

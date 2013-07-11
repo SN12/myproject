@@ -2,7 +2,7 @@
 require_once 'conf/vars.php';
 session_start();
 if(isset($_SESSION['admin']))
-     header('Location:/'+ROOTFOLDER+'/dashboardAdmin.php');
+     header('Location:'.DOMAIN.'dashboardAdmin.php');
 ?>
 
 

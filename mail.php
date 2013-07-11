@@ -1,4 +1,5 @@
 <?php
+mail();
 require_once 'conf/vars.php';
 $memberid = 234;
 $code = "6f7f9432d35dea629c8384dab312259a";
