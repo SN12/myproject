@@ -1,6 +1,4 @@
 <?php 
-define('ROOT', dirname(dirname(__FILE__)));
-
 require_once 'conf/vars.php';
 session_start();
 if(isset($_SESSION['user']))

@@ -1,17 +1,4 @@
 <?php
-
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
-/**
- * Description of MySQL
- *
- * @author Rich
- */
-
-//exit(ROOTFOLDER);
 class MySQL {
 
     //put your code here
@@ -25,7 +12,6 @@ class MySQL {
 
     private function MySQL() {
         require_once(ROOTFOLDER.'/conf/db-config.php');
-//        exit(DB_HOST);
         $this->_server = DB_HOST;
         $this->_dbName = DB_NAME;
         $this->_userName = DB_USER;

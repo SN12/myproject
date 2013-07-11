@@ -1,9 +1,8 @@
 <?php
-session_start();
 require_once 'conf/vars.php';
+session_start();
 
 if (isset($_GET['logout'])) {
-
     session_destroy();
     header('Location:' . DOMAIN . 'login.php');
 }
@@ -73,7 +72,7 @@ else
                                 if ($_GET['add'] == 1) {
 
                                     $str.="win.generate('Success', 'message');
-                               win.content('New contact has successfully added.');";
+                               win.content('The new contact has been successfully added.');";
                                 } else {
                                     $str.="win.generate('Error', 'message');
                               win.content('<p>The contact has not added.');";

@@ -113,7 +113,7 @@ else
                                     var win = new popWindowClass();";
                                 if ($_GET['value'] == 1)
                                     $str.="win.generate('Success', 'message');
-                               win.content('The event has successfully {$_GET['action']}{$end}.');";
+                               win.content('The event has been successfully {$_GET['action']}{$end}.');";
                                 else
                                     $str.="win.generate('Error', 'message');
                                win.content('The event has not {$_GET['action']}ed.');";
@@ -248,7 +248,7 @@ else
                             <div>
                             </div>
                         </div>
-<?php endif; /* end send mail tab */ ?>
+                    <?php endif; /* end send mail tab */ ?>
                 </div>
             </div>
     </body>

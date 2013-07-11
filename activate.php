@@ -19,7 +19,7 @@ if (isset($_GET) && isset($_GET['mail']) && isset($_GET['key'])) {
 require_once 'conf/vars.php';
 
 if($st==false) 
-     header('Location:' . DOMAIN . 'login.php');
+    header('Location:' . DOMAIN . 'login.php');
 ?>
 
 <!DOCTYPE html>

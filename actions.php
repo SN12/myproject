@@ -234,7 +234,6 @@ if (isset($_POST)) {
                         $file_fields[] = 'Description';
                         
                         $f = 'create_' . $type;
-                        
                         if ($data = $f($res,$file_fields, $subject )) {
                             require_once(ROOTFOLDER . '/inc/contactClass.php');
                             $Contact =new contactClass();
@@ -244,9 +243,7 @@ if (isset($_POST)) {
                                 $mails.=$contact['email'].",";
                             }
                             $mails = substr_replace($mails, "", -1);
-//                            var_dump($mails);
                             sendMailWithAttachment($mails, $data, $subject, $text);
-//                            exit;
                             $response = true.'&type='.$type;
                         }
                     }
@@ -256,6 +253,4 @@ if (isset($_POST)) {
         header('Location:' . DOMAIN . 'dashboardAdmin.php?tab=sendMail&action=send&value=' . $response);
     }
 }
-
-
 ?>

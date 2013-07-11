@@ -68,10 +68,6 @@ function dublicateFieldValue(formId, elem, fieldName) {
         }
     }).success(function(result) {
         result = result.trim();
-//        var json = jQuery.parseJSON(result);
-//        var st = status.status);
-        
-        
         if (result == 'true')
         {
             elem.removeClass('until-validate validation-passed').addClass('validation-failed');
@@ -84,7 +80,6 @@ function dublicateFieldValue(formId, elem, fieldName) {
             elem.removeClass('until-validate validation-failed').addClass('validation-passed');
             hideErrorMsg(formId);
         }
-        
     });
 }
 

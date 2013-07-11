@@ -102,7 +102,7 @@ function popWindowClass() {
                 }
             }).success(function(result) {
                 var arr = jQuery.parseJSON(result);
-                
+
                 var str = "";
                 arr.forEach(function(field) {
                     if (field.element == 'input') {
